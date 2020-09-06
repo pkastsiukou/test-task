@@ -1,0 +1,24 @@
+{
+  "name": "test-task",
+  "version": "1.0.0",
+  "description": "Lerna monorepo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run bootstrap",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build --ignore @test-task/common",
+    "prebuild": "npm run build:common",
+    "build:common": "lerna run build --scope @test-task/common",
+    "start:prod": "npm run build && node packages/server/dist/main.js",
+    "server:watch": "npm run build:common && lerna run build:watch --stream --parallel --ignore @test-task/client",
+    "client:watch": "lerna run build:watch --scope @test-task/client"
+  },
+  "author": "Pavel Kastsiukou",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
